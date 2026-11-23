@@ -27,21 +27,26 @@ def create_ascii_frame(img_array):
     return ascii_frame
 
 
-
-
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle("Webcam To Ascii")
 
-        self.text = QLabel()
-        self.text.setFont(QFont("Courier", 6))
-        
+        #ascii image UI elements
+        self.textImage = QLabel()
+        self.textImage.setFont(QFont("Courier", 6))
+
+
+
+        #button control UI elements
         self.updateButton = QPushButton("Update")
         self.setColor = QPushButton("Color")
 
+
+
+
+        #layout code
         buttonLayout = QVBoxLayout()
         buttonContainer =QWidget()
         buttonContainer.setLayout(buttonLayout)
@@ -50,17 +55,19 @@ class MainWindow(QMainWindow):
         buttonLayout.addWidget(self.setColor)
 
         layout = QGridLayout()
-        layout.addWidget(self.text, 0, 0)
+        layout.addWidget(self.textImage, 0, 0)
         layout.addWidget(buttonContainer, 0, 1)
 
 
         container = QWidget()
         container.setLayout(layout)
 
+        #start the ASCII image updating on a separate thread to keep main UI responsive
         imageThread = threading.Thread(target=self.webcam_to_ascii)
 
         imageThread.start()
 
+        #set main widget
         self.setCentralWidget(container)
 
 
@@ -72,11 +79,12 @@ class MainWindow(QMainWindow):
 
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             frame = cv2.resize(frame, (x,y))
+            frame = cv2.flip(frame, 1)
             #cv2.imshow('Camera', frame)
 
             ascii_frame = create_ascii_frame(frame)
 
-            self.text.setText(ascii_frame)
+            self.textImage.setText(ascii_frame)
 
             #os.system('cls' if os.name == 'nt' else 'clear')
             #print(ascii_frame)
