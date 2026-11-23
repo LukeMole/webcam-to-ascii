@@ -3,7 +3,7 @@ import os
 
 from PyQt6.QtWidgets import QApplication, QWidget
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QGridLayout
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QGridLayout, QLineEdit
 from PyQt6.QtGui import QFont
 import threading
 
@@ -42,8 +42,12 @@ class MainWindow(QMainWindow):
         #button control UI elements
         self.updateButton = QPushButton("Update")
         self.setColor = QPushButton("Color")
-
-
+        self.resolutionXLabel = QLabel("Vertical Resolution")
+        self.resolutionXEdit = QLineEdit("df")
+        self.resolutionYLabel = QLabel("Horizontal Resolution")
+        self.resolutionYEdit = QLineEdit("")
+        self.fontSizeLabel = QLabel("Font Size")
+        self.fontSizeEdit = QLineEdit("")
 
 
         #layout code
@@ -53,6 +57,13 @@ class MainWindow(QMainWindow):
 
         buttonLayout.addWidget(self.updateButton)
         buttonLayout.addWidget(self.setColor)
+
+        buttonLayout.addWidget(self.resolutionXLabel)
+        buttonLayout.addWidget(self.resolutionXEdit)
+        buttonLayout.addWidget(self.resolutionYLabel)
+        buttonLayout.addWidget(self.resolutionYEdit)
+        buttonLayout.addWidget(self.fontSizeLabel)
+        buttonLayout.addWidget(self.fontSizeEdit)
 
         layout = QGridLayout()
         layout.addWidget(self.textImage, 0, 0)
