@@ -3,7 +3,7 @@ import os
 
 from PyQt6.QtWidgets import QApplication, QWidget
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QGridLayout
 from PyQt6.QtGui import QFont
 import threading
 
@@ -39,9 +39,20 @@ class MainWindow(QMainWindow):
         self.text = QLabel()
         self.text.setFont(QFont("Courier", 6))
         
+        self.updateButton = QPushButton("Update")
+        self.setColor = QPushButton("Color")
 
-        layout = QVBoxLayout()
-        layout.addWidget(self.text)
+        buttonLayout = QVBoxLayout()
+        buttonContainer =QWidget()
+        buttonContainer.setLayout(buttonLayout)
+
+        buttonLayout.addWidget(self.updateButton)
+        buttonLayout.addWidget(self.setColor)
+
+        layout = QGridLayout()
+        layout.addWidget(self.text, 0, 0)
+        layout.addWidget(buttonContainer, 0, 1)
+
 
         container = QWidget()
         container.setLayout(layout)
