@@ -36,8 +36,8 @@ class MainWindow(QMainWindow):
         #ascii image UI elements
         self.textImage = QLabel()
         self.textImage.setFont(QFont("Courier", 6))
-        self.textImage.setMaximumWidth(800)
-        self.textImage.setMaximumHeight(800)
+        self.textImage.setMaximumWidth(self.width()//2)
+        self.textImage.setMaximumHeight(self.width()//2)
 
 
 
