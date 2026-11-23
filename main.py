@@ -5,6 +5,8 @@ from PyQt6.QtWidgets import QApplication, QWidget
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QGridLayout, QLineEdit
 from PyQt6.QtGui import QFont
+from PyQt6.QtCore import Qt
+
 import threading
 
 def create_ascii_frame(img_array):
@@ -36,8 +38,8 @@ class MainWindow(QMainWindow):
         #ascii image UI elements
         self.textImage = QLabel()
         self.textImage.setFont(QFont("Courier", 6))
-        self.textImage.setMaximumWidth(self.width()//2)
-        self.textImage.setMaximumHeight(self.width()//2)
+        self.textImage.setMaximumWidth(round((self.width()/1.25)))
+        self.textImage.setMaximumHeight(round((self.width()/1.25)))
 
 
 
@@ -51,14 +53,13 @@ class MainWindow(QMainWindow):
         self.fontSizeLabel = QLabel("Font Size")
         self.fontSizeEdit = QLineEdit("")
 
-
         #layout code
         buttonLayout = QVBoxLayout()
+        buttonLayout.setAlignment(Qt.AlignmentFlag.AlignTop)
         buttonContainer =QWidget()
         buttonContainer.setLayout(buttonLayout)
 
-        buttonLayout.addWidget(self.updateButton)
-        buttonLayout.addWidget(self.setColor)
+        #buttonContainer.setMaximumHeight(round(self.height()/1.75))
 
         buttonLayout.addWidget(self.resolutionXLabel)
         buttonLayout.addWidget(self.resolutionXEdit)
@@ -67,9 +68,12 @@ class MainWindow(QMainWindow):
         buttonLayout.addWidget(self.fontSizeLabel)
         buttonLayout.addWidget(self.fontSizeEdit)
 
-        layout = QGridLayout()
-        layout.addWidget(self.textImage, 0, 0)
-        layout.addWidget(buttonContainer, 0, 1)
+        buttonLayout.addWidget(self.setColor)
+        buttonLayout.addWidget(self.updateButton)
+
+        layout = QHBoxLayout()
+        layout.addWidget(self.textImage)
+        layout.addWidget(buttonContainer)
 
 
         container = QWidget()
