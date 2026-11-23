@@ -36,6 +36,8 @@ class MainWindow(QMainWindow):
         #ascii image UI elements
         self.textImage = QLabel()
         self.textImage.setFont(QFont("Courier", 6))
+        self.textImage.setMaximumWidth(800)
+        self.textImage.setMaximumHeight(800)
 
 
 
@@ -43,7 +45,7 @@ class MainWindow(QMainWindow):
         self.updateButton = QPushButton("Update")
         self.setColor = QPushButton("Color")
         self.resolutionXLabel = QLabel("Vertical Resolution")
-        self.resolutionXEdit = QLineEdit("df")
+        self.resolutionXEdit = QLineEdit("")
         self.resolutionYLabel = QLabel("Horizontal Resolution")
         self.resolutionYEdit = QLineEdit("")
         self.fontSizeLabel = QLabel("Font Size")
