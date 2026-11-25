@@ -29,6 +29,21 @@ def create_ascii_frame(img_array):
     return ascii_frame
 
 
+def webcam_to_ascii(camera, x=128,y=64):
+    ret, frame = camera.read()
+
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    frame = cv2.resize(frame, (x,y))
+    frame = cv2.flip(frame, 1)
+    #cv2.imshow('Camera', frame)
+
+    ascii_frame = create_ascii_frame(frame)
+
+    return ascii_frame
+
+    #os.system('cls' if os.name == 'nt' else 'clear')
+    #print(ascii_frame)
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -80,7 +95,7 @@ class MainWindow(QMainWindow):
         container.setLayout(layout)
 
         #start the ASCII image updating on a separate thread to keep main UI responsive
-        imageThread = threading.Thread(target=self.webcam_to_ascii)
+        imageThread = threading.Thread(target=self.update_frame)
 
         imageThread.start()
 
@@ -88,23 +103,14 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(container)
 
 
-    def webcam_to_ascii(self, x=128,y=64):
+    def update_frame(self):
         camera = cv2.VideoCapture(0)
-
         while True:
-            ret, frame = camera.read()
+            frame = webcam_to_ascii(camera)
+            self.textImage.setText(frame)
 
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            frame = cv2.resize(frame, (x,y))
-            frame = cv2.flip(frame, 1)
-            #cv2.imshow('Camera', frame)
 
-            ascii_frame = create_ascii_frame(frame)
 
-            self.textImage.setText(ascii_frame)
-
-            #os.system('cls' if os.name == 'nt' else 'clear')
-            #print(ascii_frame)
 
 
 if __name__ == '__main__':
